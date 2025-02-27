@@ -6,7 +6,7 @@ const jwt=require('jsonwebtoken')
 const userSchema= mongoose.Schema({
     firstName:{
         type:String,
-        // required:true,
+        required:true,
         // upppercase:true,
         // minLength:2,
         // maxLength:15
@@ -47,18 +47,23 @@ const userSchema= mongoose.Schema({
     },
     gender:{
         type:String,
-        // enum:["male","female","others"]
+        enum:["Male","Female","Others"],
+        runValidators:true
+    },
+    about:{
+        type:String,
+        default:"this is a default intro"
     },
     photoUrl:{
         type:String,
-    //    default:"xyz" 
+       default:"https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
     }
 
 })
 
 userSchema.methods.getJWT=async function(){
     const user=this;
-    const token= await jwt.sign({_id:user._id},"CodeConnect@123",{expiresIn:"20000"});
+    const token= await jwt.sign({_id:user._id},"CodeConnect@123");
     return token;
 }
 

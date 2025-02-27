@@ -6,18 +6,19 @@ const userAuth=async(req,res,next)=>{
         const cookies=req.cookies;
         const {token}=cookies;
         if(!token){
-            throw new Error();
+            return res.status(401).send("please login first");
         }
+        // console.log(token)
         const decoded=await jwt.verify(token,"CodeConnect@123");
         const id=decoded._id;
         const user=await User.findById(id);
         if(!user)
-            throw new Error();
+            return res.status(401).send("please login first");
         req.user=user;
         next();
     }
     catch(err){
-        res.end("please login first");
+        res.status(400).send(err.message);
     }
     
 }
