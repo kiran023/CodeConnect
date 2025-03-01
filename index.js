@@ -30,6 +30,7 @@ connectDB()
         console.log("server connected");
     })
 })
+
 .catch((err)=>{
     console.log("error occured",err);
 });
